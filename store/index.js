@@ -1,4 +1,7 @@
-import axios from "~/plugins/axios";
+// import axios from "~/plugins/axios";
+import axios from 'axios'
+
+const baseURL = 'https://my-json-server.typicode.com/ariseptyann/api/';
 
 export const state = () => ({
   countries: []
@@ -29,7 +32,10 @@ export const actions = {
   async nuxtServerInit({
     commit
   }) {
-    const res = await axios.get('negara')
+    const res = await axios({
+      method: 'get',
+      url: baseURL + 'negara'
+    })
     commit('setData', res.data)
   },
 
@@ -37,8 +43,12 @@ export const actions = {
   async submitData({
     commit
   }, name) {
-    const res = await axios.post('negara', {
-      name: name
+    const res = await axios({
+      method: 'post',
+      url: baseURL + 'negara',
+      data: {
+        name: name
+      }
     })
     commit('addData', res.data)
   },
@@ -46,23 +56,38 @@ export const actions = {
   async removeData({
     commit
   }, id) {
-    const res = await axios.delete('negara/' + id)
+    const res = await axios({
+      method: 'delete',
+      url: baseURL + 'negara/' + id
+    })
+    // const res = await axios.delete('negara/' + id)
     commit('removeData', id)
   },
 
   async getData({
     commit
   }, id) {
-    const res = await axios.get('negara/' + id)
+    const res = await axios({
+      method: 'get',
+      url: baseURL + 'negara/' + id
+    })
+    // const res = await axios.get('negara/' + id)
     return res.data
   },
 
   async updateData({
     commit
   }, data) {
-    const res = await axios.put('negara/' + data.id, {
-      name: data.name
+    const res = await axios({
+      method: 'put',
+      url: baseURL + 'negara/' + data.id,
+      data: {
+        name: data.name
+      }
     })
+    // const res = await axios.put('negara/' + data.id, {
+    //   name: data.name
+    // })
     commit('updateData', data)
   }
 }
